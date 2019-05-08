@@ -46,11 +46,18 @@ RUN set -x; \
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
+# TODO remove dockerize (replace wait postgres by another script)
 RUN /install/gosu.sh && /install/dockerize.sh
 
+RUN curl -SL https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 -o /usr/local/bin/confd \
+  && echo '255d2559f3824dd64df059bdc533fd6b697c070db603c76aaf8d1d5e6b0cc334 /usr/local/bin/confd' | sha256sum -c - \
+  && chmod +x /usr/local/bin/confd
+
+RUN mkdir -p /etc/confd/{conf.d,templates}
+COPY ./conf.d /etc/confd/conf.d
+COPY ./templates /etc/confd/templates
 COPY ./src_requirements.txt /odoo
 COPY ./bin /odoo-bin
-COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
