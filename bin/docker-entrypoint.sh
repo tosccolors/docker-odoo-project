@@ -1,14 +1,6 @@
 #!/bin/bash
 set -e
 
-# allow to customize the UID of the odoo user,
-# so we can share the same than the host's.
-# If no user id is set, we use 999
-USER_ID=${LOCAL_USER_ID:-999}
-
-echo "Starting with UID : $USER_ID"
-id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
-
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
@@ -82,9 +74,9 @@ if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   echo 'Running pip install -e /odoo/src to restore odoo.egg-info'
   pip install -e /odoo/src
   # As we write in a volume, ensure it has the same user.
-  # So when the src is a host volume and we set the LOCAL_USER_ID to be the
+  # So when the src is a host volume and we set the USER to be the
   # host user, the files are owned by the host user
-  chown -R odoo: /odoo/src/odoo.egg-info
+  chown -R ${USER}: /odoo/src/odoo.egg-info
 fi
 
 
@@ -93,7 +85,7 @@ if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; t
   echo '/src/*.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /odoo to restore *.egg-info'
   pip install -e /odoo
-  chown -R odoo: /odoo/*.egg-info
+  chown -R ${USER}: /odoo/*.egg-info
 fi
 
 
@@ -101,11 +93,11 @@ fi
 wait_postgres.sh
 
 mkdir -p /data/odoo/{addons,filestore,sessions}
-if [ ! "$(stat -c '%U' /data/odoo)" = "odoo" ]; then
-  chown -R odoo: /data/odoo
+if [ ! "$(stat -c '%U' /data/odoo)" = "${USER}" ]; then
+  chown -R ${USER}: /data/odoo
 fi
-if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
-  chown -R odoo: /var/log/odoo
+if [ ! "$(stat -c '%U' /var/log/odoo)" = "${USER}" ]; then
+  chown -R ${USER}: /var/log/odoo
 fi
 
 BASE_CMD=$(basename $1)
@@ -125,7 +117,6 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
     run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
-  exec gosu odoo "$@"
 fi
 
 exec "$@"

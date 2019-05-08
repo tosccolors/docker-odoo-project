@@ -1,6 +1,8 @@
 FROM debian:stretch
 MAINTAINER Camptocamp
 
+USER root
+
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
@@ -76,6 +78,17 @@ ENV ODOO_VERSION=11.0 \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
     OPENERP_SERVER=/etc/odoo.cfg
+
+RUN touch /etc/odoo.cfg && \
+    chmod -R u+x /odoo-bin && \
+    chgrp -R 0 /odoo && \
+    chgrp -R 0 /data/odoo && \
+    chgrp -R 0 /var/log/odoo && \
+    chmod -R g=u /odoo /etc/odoo.cfg
+
+# Containers should NOT run as root as a good practice
+# Enforced by openshift
+USER 10001
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]

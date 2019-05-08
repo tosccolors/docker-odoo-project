@@ -1,7 +1,9 @@
 MAINTAINER Camptocamp
 
 WORKDIR "/odoo"
+USER root
 COPY ./extra_requirements.txt ./
+
 
 # Install extra requirement
 RUN set -x; \
@@ -10,3 +12,4 @@ RUN set -x; \
         && /install/purge_dev_package_and_cache.sh
 
 WORKDIR "/"
+USER 10001
