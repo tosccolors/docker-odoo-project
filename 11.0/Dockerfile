@@ -86,12 +86,13 @@ ENV ODOO_VERSION=11.0 \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
     OPENERP_SERVER=/etc/odoo.cfg
 
-RUN touch /etc/odoo.cfg && \
-    chmod -R u+x /odoo-bin && \
-    chgrp -R 0 /odoo && \
-    chgrp -R 0 /data/odoo && \
-    chgrp -R 0 /var/log/odoo && \
-    chmod -R g=u /odoo /etc/odoo.cfg
+RUN chmod -R u+x /odoo-bin && \
+    chmod -R u+x /start-entrypoint.d && \
+    chmod -R u+x /before-migrate-entrypoint.d && \
+    chgrp -R 0 /odoo && chmod g=u /odoo && \
+    chgrp -R 0 /data/odoo && chmod g=u /data/odoo && \
+    chgrp -R 0 /var/log/odoo && chmod g=u /var/log/odoo && \
+    chgrp -R 0 /etc && chmod g=u /etc
 
 # Containers should NOT run as root as a good practice
 # Enforced by openshift

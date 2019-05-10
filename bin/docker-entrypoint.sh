@@ -51,15 +51,6 @@ esac
 # Create configuration file from the template
 # FIXME rename openerp.cfg.tmpl to odoo.cfg.tmpl in all versions
 /usr/local/bin/confd -onetime -backend env
-# FIXME confd creates a new tmp file (eg /etc/.odoo.cfg539961654) in the same
-# directory than the destination, we don't have the write perm except on
-# /etc/odoo.cfg, so instead confd creates it in /tmp and we move it afterwards
-cat /tmp/odoo.cfg > /etc/odoo.cfg
-
-if [ ! -f "/etc/odoo.cfg" ]; then
-  echo "Error: one of /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
-  exit 1
-fi
 
 if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   # The build runs 'pip install -e' on the odoo src, which creates an
