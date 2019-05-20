@@ -4,7 +4,7 @@ MAINTAINER Camptocamp
 USER root
 
 # create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /odoo /var/log/odoo
+RUN mkdir -p /odoo /var/log/odoo /data/odoo
 
 COPY ./base_requirements.txt /odoo
 COPY ./install /install
@@ -44,10 +44,10 @@ RUN set -x; \
         && /install/purge_dev_package_and_cache.sh \
         && /install/reportlab_init.sh
 
-# grab gosu for easy step-down from root and dockerize to generate template and
+# grab dockerize to generate template and
 # wait on postgres
 # TODO remove dockerize (replace wait postgres by another script)
-RUN /install/gosu.sh && /install/dockerize.sh
+RUN /install/dockerize.sh
 
 RUN curl -SL https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 -o /usr/local/bin/confd \
   && echo '255d2559f3824dd64df059bdc533fd6b697c070db603c76aaf8d1d5e6b0cc334 /usr/local/bin/confd' | sha256sum -c - \
@@ -63,8 +63,6 @@ COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
 # Place coveragerc in workdir where coverage will be launched from
 COPY ./.coveragerc /
-
-VOLUME ["/data/odoo", "/var/log/odoo"]
 
 # Expose Odoo services
 EXPOSE 8069 8072
@@ -89,10 +87,13 @@ ENV ODOO_VERSION=11.0 \
 RUN chmod -R u+x /odoo-bin && \
     chmod -R u+x /start-entrypoint.d && \
     chmod -R u+x /before-migrate-entrypoint.d && \
-    chgrp -R 0 /odoo && chmod g=u /odoo && \
-    chgrp -R 0 /data/odoo && chmod g=u /data/odoo && \
+    chgrp -R 0 /odoo && chmod -R g=u /odoo && \
+    chgrp -R 0 /data && chmod -R g=u /data && \
     chgrp -R 0 /var/log/odoo && chmod g=u /var/log/odoo && \
-    chgrp -R 0 /etc && chmod g=u /etc
+    chgrp -R 0 /etc && chmod g=u /etc && \
+    chmod g=u /etc/passwd
+
+VOLUME ["/data/odoo", "/var/log/odoo"]
 
 # Containers should NOT run as root as a good practice
 # Enforced by openshift
