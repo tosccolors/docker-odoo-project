@@ -1,5 +1,5 @@
 FROM debian:stretch
-MAINTAINER Camptocamp
+MAINTAINER Magnus
 
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
@@ -35,7 +35,7 @@ RUN set -x; \
         && /install/package_odoo_11.0_12.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
-        && /install/wkhtml_12_4.sh \
+        && /install/wkhtml_12_5_1.sh \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip setuptools \
         && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
