@@ -34,6 +34,7 @@ trap on_exit EXIT
 cp -r ${VERSION}/. ${TMP}/
 cp -r bin/ ${TMP}
 cp -rT common/ ${TMP}
+ls -la ${TMP}
 cp ${TMP}/Dockerfile-onbuild ${TMP}/Dockerfile-batteries-onbuild
 sed -i "1i FROM ${IMAGE_LATEST}" ${TMP}/Dockerfile-onbuild
 sed -i "1i FROM ${IMAGE_LATEST}" ${TMP}/Dockerfile-batteries
