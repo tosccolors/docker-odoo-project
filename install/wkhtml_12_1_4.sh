@@ -2,6 +2,6 @@
 set -eo pipefail
 
 curl -o wkhtmltox.deb -SL https://builds.wkhtmltopdf.org/0.12.1.4/wkhtmltox_0.12.1.4-1.stretch_amd64.deb
-echo 'b82d75142929799011fa066e376ae65dcb89aad316a6398f8e137dd9cb7ae278 wkhtmltox.deb' | sha1sum -c -
+echo '9c1855d0c5ca58f1221851d5284fa500baf9e78d  wkhtmltox.deb' | sha1sum -c -
 dpkg --force-depends -i wkhtmltox.deb
 rm wkhtmltox.deb
