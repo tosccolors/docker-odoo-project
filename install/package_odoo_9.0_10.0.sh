@@ -38,5 +38,6 @@ echo "Section: python
  \"pip install pyPdf\"" >> python-pypdf
 cat python-pypdf
 equivs-build python-pypdf
+mv equivs-dummy_1.0_all.deb python-pypdf_1.13_all.deb
 dpkg -i python-pypdf_1.13_all.deb
 pip install pyPdf
