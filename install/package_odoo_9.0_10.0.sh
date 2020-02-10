@@ -21,5 +21,5 @@ apt-get install -y --no-install-recommends \
     xfonts-75dpi \
     xfonts-base \
     tcl expect \
-    equivs
-
+    equivs  \
+    gnupg
