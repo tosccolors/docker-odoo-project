@@ -26,8 +26,7 @@ apt-get install -y --no-install-recommends \
 equivs-control python-pypdf
 rm python-pypdf
 touch python-pypdf
-echo "
-Section: python
+echo "Section: python
  Package: python-pypdf
  Version: 1.13
  Description: fake package to provide python-pypdf
