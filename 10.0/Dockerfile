@@ -1,5 +1,5 @@
-FROM debian:jessie
-MAINTAINER Camptocamp
+FROM debian:stretch
+MAINTAINER Magnus
 
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
