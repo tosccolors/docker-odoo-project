@@ -32,7 +32,7 @@ ENV PURGE_PACKAGE npm
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && /install/package_odoo_9.0_10.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \

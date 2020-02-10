@@ -23,6 +23,7 @@ apt-get install -y --no-install-recommends \
     tcl expect \
     equivs
 
+touch python-pypdf
 echo "
 Section: python
  Package: python-pypdf
