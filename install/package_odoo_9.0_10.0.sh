@@ -23,13 +23,15 @@ apt-get install -y --no-install-recommends \
     tcl expect \
     equivs
 
+pwd
 equivs-control python-pypdf
-
+cat python-pypdf
 echo "
  .
  python-pypdf will need to be installed with
  \"pip install pyPdf\"" >> python-pypdf
 
+cat python-pypdf
 equivs-build python-pypdf
 dpkg -i python-pypdf_1.13_all.deb
 pip install pyPdf
