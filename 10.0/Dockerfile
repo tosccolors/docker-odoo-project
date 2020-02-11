@@ -25,7 +25,6 @@ ENV BUILD_PACKAGE \
     libssl-dev \
     libjpeg-dev \
     zlib1g-dev \
-    libfreetype6-dev \
     git
 
 ENV PURGE_PACKAGE npm
@@ -36,7 +35,7 @@ RUN set -x; \
         && /install/package_odoo_9.0_10.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
-        && /install/wkhtml_12_1_2.sh \
+        && /install/wkhtml_12_5_1.sh \
         && /install/dev_package.sh \
         && pip install -U pip setuptools \
         && pip install pyPdf \
