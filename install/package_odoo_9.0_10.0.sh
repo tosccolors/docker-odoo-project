@@ -23,3 +23,4 @@ apt-get install -y --no-install-recommends \
     tcl expect \
     equivs  \
     gnupg
+apt-get install dirmngr --install-recommends
