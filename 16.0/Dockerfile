@@ -1,6 +1,6 @@
 FROM python:3.10-bullseye 
 MAINTAINER Camptocamp
-ARG UID=999
+ARG UID=1001
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
