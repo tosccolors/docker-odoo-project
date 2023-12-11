@@ -38,6 +38,7 @@ pyasn1==0.4.8
 pycparser==2.21
 pycryptodome==3.16.0
 PyNaCl==1.5.0
+suds-jurko==0.6
 pytesseract==0.3.10
 regex==2022.10.31
 s3transfer==0.6.0

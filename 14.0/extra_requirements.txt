@@ -1,4 +1,4 @@
-# Extra python dependencies
+-# Extra python dependencies
 algoliasearch==2.6.2
 Adyen==7.1.1
 cachetools==5.2.0
@@ -15,7 +15,7 @@ paypalrestsdk==1.13.1
 phonenumbers==8.13.1
 pyquerystring==1.1
 pyOpenSSL==22.1.0
-pyquerystring==1.1
+pyquery
 pysimplesoap==1.16.2
 requests-mock==1.10.0
 slugify==0.0.1
